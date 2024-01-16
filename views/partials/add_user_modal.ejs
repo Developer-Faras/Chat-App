@@ -33,7 +33,6 @@
 
     form.onsubmit = async function (e) {
         e.preventDefault();
-
         const formData = await new FormData(form);
         let response = await fetch('/users', {
             method: 'POST',
@@ -47,7 +46,7 @@
           const errors = result.errors;
           const msgss = Object.keys(errors);
           errorHolders.forEach((holder) => holder.innerHTML = '');
-          
+
           for (let i = 0; i < msgss.length; i++) {
             const error = msgss[i];
             document.querySelector(`.error.${error}`).innerHTML = errors[error].msg;
