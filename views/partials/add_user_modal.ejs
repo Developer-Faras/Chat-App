@@ -1,0 +1,69 @@
+<div class="modal-wrapper" id="add-user-modal" >
+    <div class="modal">
+      <a href="#" onclick="closeModal()" class="modal-close">+</a>
+      <div class="modal-title">
+        <h2>Create New User</h2>
+      </div>
+      <div class="modal-body">
+        <form id="add-user-form">
+          <p class="success show success-msg"></p>
+          <input type="text" placeholder="enter name" name="name" />
+          <p class="error show name"></p>
+
+          <input type="text" placeholder="enter email" name="email" />
+          <p class="error show email"></p>
+
+          <input type="text" placeholder="enter mobile" name="phone" />
+          <p class="error show phone"></p>
+
+          <input type="password" placeholder="enter password" name="password" />
+          <p class="error show password"></p>
+
+          <input type="file" name="avatar" />
+          <p class="error show avatar"></p>
+
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('add-user-form');
+
+    form.onsubmit = async function (e) {
+        e.preventDefault();
+
+        const formData = await new FormData(form);
+        let response = await fetch('/users', {
+            method: 'POST',
+            body: formData
+        });
+
+        let result = await response.json();
+        const errorHolders = document.querySelectorAll('.error');
+
+        if(result.errors){
+          const errors = result.errors;
+          const msgss = Object.keys(errors);
+          errorHolders.forEach((holder) => holder.innerHTML = '');
+          
+          for (let i = 0; i < msgss.length; i++) {
+            const error = msgss[i];
+            document.querySelector(`.error.${error}`).innerHTML = errors[error].msg;
+            
+          }   
+        }
+        
+        if(result.status){
+          document.querySelector('.success-msg').innerHTML = result.msg;
+          errorHolders.forEach((errorHolder) => {
+            errorHolder.innerHTML = '';
+          });
+          setTimeout(() => {
+            form.reset();
+            closeModal();
+          }, 1000);
+        }
+    }
+  </script>

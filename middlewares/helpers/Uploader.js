@@ -8,7 +8,6 @@ const Uploader = (uploadFileName, mimeTypes, maxSize) => {
     const UploadDir = path.join(__dirname, '../../public/uploads/', uploadFileName);
     const MaxFileSize = maxSize * 1024 * 1024;
 
-    console.log(UploadDir)
     const StorageEngine = multer.diskStorage({
         destination: (req, file, cb) => {
             cb(null, UploadDir);

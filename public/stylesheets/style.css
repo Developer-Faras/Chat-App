@@ -51,6 +51,11 @@ p.error {
   font-size: 1.2rem;
   display: none;
 }
+p.success{
+  color: var(--green);
+  font-size: 1.2rem;
+  display: none;
+}
 
 .show {
   display: block !important;
